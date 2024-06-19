@@ -1,0 +1,35 @@
+server:
+  servlet:
+    context-path: /customers
+  port: 8081
+
+spring:
+
+  application:
+    name: ClientsApplication
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${INSTANCE_IP}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      data-source-properties:
+        socketFactory: com.google.cloud.sql.postgres.SocketFactory
+        cloudSqlInstance:
+        enableIamAuth: true
+        sslmode: disable
+  cloud:
+    config:
+      enabled: false
+    gcp:
+      sql:
+        enabled: true
+        instance-connection-name: ${INSTANCE_NAME}
+        database-name: ${DB_NAME}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+
